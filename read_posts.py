@@ -1,6 +1,6 @@
 from utils.sheet_reader import get_pending_posts, update_post_status
 
-SHEET_NAME = "Social Media Automation (Client Posts)"
+SHEET_NAME = "social-media-automation"
 CLIENT_TAB = "Vivianna Group"
 
 posts = get_pending_posts(SHEET_NAME, CLIENT_TAB)
