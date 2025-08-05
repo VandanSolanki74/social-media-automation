@@ -16,7 +16,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 
 # Step 3: Open the spreadsheet and select the worksheet (tab)
-spreadsheet = client.open("social-media-automation (Client Posts)")  # ✅ correct name
+spreadsheet = client.open("social-media-automation")  # ✅ correct name
 worksheet = spreadsheet.worksheet("Nilkanth")  # change to another client tab if needed
 
 # Step 4: Fetch all rows
