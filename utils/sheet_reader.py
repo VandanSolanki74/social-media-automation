@@ -38,8 +38,7 @@ def get_pending_posts(sheet_name: str, client_tab: str):
         if row_date == today and row_hour == current_hour and status == "pending":
             row["_row_number"] = idx
             filtered.append(row)
-
-    return filtered
+            return filtered
 
 def update_post_status(sheet_name: str, client_tab: str, row_number: int, new_status: str = "done"):
     spreadsheet = connect_to_sheet(sheet_name)
