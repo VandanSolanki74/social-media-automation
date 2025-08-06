@@ -1,4 +1,4 @@
-from sheet_reader import get_pending_posts
+from utils.sheet_reader import get_pending_posts
 
 SHEET_NAME = "social-media-automation1"  # Same sheet
 # Instead of a single tab, get all worksheets
