@@ -23,7 +23,7 @@ def get_pending_posts(sheet_name: str, client_tab: str):
 
     data = worksheet.get_all_records()
     now = datetime.datetime.now()
-    today = now.strftime("%Y-%m-%d")
+    today = now.strftime("%d-%m-%Y")
     current_hour = now.strftime("%H")
 
     filtered = []
