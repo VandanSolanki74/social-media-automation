@@ -3,7 +3,7 @@ from utils.sheet_reader import get_pending_posts
 SHEET_NAME = "social-media-automation1"  # Same sheet
 # Instead of a single tab, get all worksheets
 import gspread
-from sheet_reader import connect_to_sheet
+from utils.sheet_reader import connect_to_sheet
 
 spreadsheet = connect_to_sheet(SHEET_NAME)
 worksheet_list = spreadsheet.worksheets()
