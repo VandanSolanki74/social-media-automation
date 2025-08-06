@@ -21,7 +21,7 @@ def get_pending_posts(sheet_name: str, client_tab: str):
     spreadsheet = connect_to_sheet(sheet_name)
     worksheet = spreadsheet.worksheet(client_tab)
     headers = worksheet.row_values(1)
-if len(headers) != len(set(headers)) or "" in headers:
+    if len(headers) != len(set(headers)) or "" in headers:
     raise Exception(f"Invalid headers in tab '{client_tab}': {headers}")
 
     data = worksheet.get_all_records()
