@@ -4,6 +4,10 @@ import datetime
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
+EXPECTED_HEADERS = [
+    "Date", "Time", "Platform", "Title", "Subtitle", "Caption", "Media URLs", "Status"
+]
+
 def get_service_account_credentials():
     service_account_json = os.environ.get("SERVICE_ACCOUNT_JSON")
     if not service_account_json:
@@ -20,9 +24,17 @@ def connect_to_sheet(sheet_name: str):
 def get_pending_posts(sheet_name: str, client_tab: str):
     spreadsheet = connect_to_sheet(sheet_name)
     worksheet = spreadsheet.worksheet(client_tab)
+
     headers = worksheet.row_values(1)
+
+    # Check duplicates or empty headers
     if len(headers) != len(set(headers)) or "" in headers:
         raise Exception(f"Invalid headers in tab '{client_tab}': {headers}")
+
+    # Check missing required headers
+    missing = [h for h in EXPECTED_HEADERS if h not in headers]
+    if missing:
+        raise Exception(f"Missing headers in tab '{client_tab}': {missing}")
 
     data = worksheet.get_all_records()
     now = datetime.datetime.now()
@@ -30,7 +42,7 @@ def get_pending_posts(sheet_name: str, client_tab: str):
     current_hour = now.strftime("%H")
 
     filtered = []
-    for idx, row in enumerate(data, start=2):  # start=2 for 1-based index + header row
+    for idx, row in enumerate(data, start=2):  # start=2 for header row offset
         row_date = str(row.get("Date")).strip()
         row_hour = str(row.get("Time")).zfill(2)
         status = row.get("Status", "").strip().lower()
@@ -38,7 +50,8 @@ def get_pending_posts(sheet_name: str, client_tab: str):
         if row_date == today and row_hour == current_hour and status == "pending":
             row["_row_number"] = idx
             filtered.append(row)
-            return filtered
+
+    return filtered  # ← moved outside loop
 
 def update_post_status(sheet_name: str, client_tab: str, row_number: int, new_status: str = "done"):
     spreadsheet = connect_to_sheet(sheet_name)
