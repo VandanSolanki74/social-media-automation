@@ -5,7 +5,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 EXPECTED_HEADERS = [
-    "Date", "Time", "Platform", "Title", "Subtitle", "Caption", "Media URLs", "Status"
+    "Date", "Time", "Platform", "Title", "Subtitle", "Caption", "MediaURLs", "Status"
 ]
 
 def get_service_account_credentials():
